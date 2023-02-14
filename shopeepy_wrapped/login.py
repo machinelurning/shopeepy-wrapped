@@ -2,8 +2,6 @@ import getpass
 import time
 from typing import Tuple
 
-from shopeepy_wrapped.config.core import config
-
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -11,11 +9,12 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 
 from shopeepy_wrapped.browser_automation.driver_setup import driver
-from shopeepy_wrapped.browser_automation.window_interxn import (
-    perform_keyboard_actions,
-    click_button,
-)
 from shopeepy_wrapped.browser_automation.element_locator import element_id_generator
+from shopeepy_wrapped.browser_automation.window_interxn import (
+    click_button,
+    perform_keyboard_actions,
+)
+from shopeepy_wrapped.config.core import config
 
 
 def input_credentials() -> Tuple[str, str, str]:
@@ -88,5 +87,6 @@ def login() -> None:
         time.sleep(5)
 
     print("Login successful!")
+
 
 login()
