@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Dict
+from typing import Dict
 
 from pydantic import BaseModel
 from strictyaml import YAML, load
@@ -31,7 +31,7 @@ class Config(BaseModel):
     """Master config object."""
 
     login_config: LogInConfig
-    #model_config: ModelConfig
+    # model_config: ModelConfig
 
 
 def find_config_file() -> Path:
