@@ -1,0 +1,33 @@
+# Package Overview
+package_name: shopeepy_wrapped
+
+# Login Config
+
+USERNAME_INPUT:
+  element_tag: input
+  attribute: name
+  attribute_value: loginKey
+
+PASSWORD_INPUT:
+  element_tag: input
+  attribute: name
+  attribute_value: password
+
+LOGIN_BUTTON:
+  element_tag: button
+  attribute: class
+  attribute_value: wyhvVD _1EApiB hq6WM5 L-VL8Q cepDQ1 _7w24N1
+
+VERIFY_BY_SHOPEEPAY:
+  element_tag: div
+  attribute: text
+  attribute_value: Verify by ShopeePay PIN
+
+VERIFY_BY_EMAIL_OTP:
+  element_tag: div
+  attribute: text
+  attribute_value: Verify by Email Link
+
+LOGINPAGE_LINK: https://shopee.ph/buyer/login
+
+
