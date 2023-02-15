@@ -1,12 +1,10 @@
 from bs4 import BeautifulSoup
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.support.wait import WebDriverWait
 
 from login import login
 from shopeepy_wrapped.browser_automation.driver_setup import driver
 from shopeepy_wrapped.browser_automation.element_locator import element_id_generator
 from shopeepy_wrapped.browser_automation.scroll import scroll_to_bottom
+from shopeepy_wrapped.browser_automation.webdriverwait import webdriverwait
 from shopeepy_wrapped.config.core import config
 from shopeepy_wrapped.scrapee import Order
 
@@ -16,8 +14,7 @@ def main():
 
     driver.get(config.scrapee_config.PURCHASEPAGE_LINK)
 
-    WebDriverWait(driver, 10).until(
-        ec.presence_of_element_located((By.XPATH, element_id_generator(**config.scrapee_config.PURCHASES, xpath=True))))
+    webdriverwait(config.scrapee_config.PURCHASES)
 
     scroll_to_bottom()
 

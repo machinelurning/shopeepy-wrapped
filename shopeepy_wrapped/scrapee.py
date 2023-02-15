@@ -1,12 +1,10 @@
 import re
 
 from bs4 import BeautifulSoup
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.support.wait import WebDriverWait
 
 from shopeepy_wrapped.browser_automation.driver_setup import driver
 from shopeepy_wrapped.browser_automation.element_locator import element_id_generator
+from shopeepy_wrapped.browser_automation.webdriverwait import webdriverwait
 from shopeepy_wrapped.config.core import config
 from shopeepy_wrapped.href_manipulation import append_site_prefix
 
@@ -27,9 +25,7 @@ class Product:
     def get_bread_crumbs(self, href):
         driver.get(href)
 
-        WebDriverWait(driver, 10).until(
-            ec.presence_of_element_located(
-                (By.XPATH, (element_id_generator(**config.scrapee_config.BREAD_CRUMB, xpath=True)))))
+        webdriverwait(config.scrapee_config.BREAD_CRUMB)
 
         product_soup = BeautifulSoup(driver.page_source, features="html.parser")
         bread_crumb_element = product_soup.find(*element_id_generator(**config.scrapee_config.BREAD_CRUMB_ELEMENT))
@@ -157,9 +153,7 @@ class Order:
 
         driver.get(self.get_href())
 
-        WebDriverWait(driver, 10).until(
-            ec.presence_of_element_located(
-                (By.XPATH, element_id_generator(**config.scrapee_config.ORDER_DETAILS, xpath=True))))
+        webdriverwait(config.scrapee_config.ORDER_DETAILS)
 
         soup = BeautifulSoup(driver.page_source, features="html.parser")
 
