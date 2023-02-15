@@ -31,6 +31,7 @@ def webdriverwait(config: Element) -> None:
 
     try:
         WebDriverWait(driver, 10).until(ec.presence_of_element_located((By.XPATH, xpath)))
-    except TimeoutError as ex:
+
+    except TimeoutException as ex:
         print(ex)
         print("Webdriver timed out.")
