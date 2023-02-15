@@ -28,6 +28,11 @@ VERIFY_BY_EMAIL_OTP:
   attribute: text
   attribute_value: Verify by Email Link
 
+WRONG_CREDENTIALS:
+  element_tag: div
+  attribute: class
+  attribute_value: gCY-Ye
+
 LOGINPAGE_LINK: https://shopee.ph/buyer/login
 
 

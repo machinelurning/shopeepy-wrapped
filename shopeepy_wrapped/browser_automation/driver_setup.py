@@ -2,7 +2,7 @@ import chromedriver_autoinstaller
 from selenium import webdriver
 
 
-def setup_chromedriver():
+def setup_chromedriver() -> webdriver:
     chromedriver_autoinstaller.install()
 
     chrome_options = webdriver.ChromeOptions()

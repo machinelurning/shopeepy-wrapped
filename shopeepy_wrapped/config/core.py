@@ -24,6 +24,7 @@ class LogInConfig(BaseModel):
     LOGIN_BUTTON: Dict[str, str]
     VERIFY_BY_SHOPEEPAY: Dict[str, str]
     VERIFY_BY_EMAIL_OTP: Dict[str, str]
+    WRONG_CREDENTIALS: Dict[str, str]
     LOGINPAGE_LINK: str
 
 
