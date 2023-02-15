@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Any
 
 from pydantic import BaseModel
 from strictyaml import YAML, load
@@ -28,11 +28,38 @@ class LogInConfig(BaseModel):
     LOGINPAGE_LINK: str
 
 
+class ScrapeeConfig(BaseModel):
+    """
+    Scraping config.
+    """
+
+    PURCHASES: Dict[str, str]
+    NAME: Dict[str, str]
+    PRICE: Any
+    STORE: Dict[str, str]
+    STATUS: Dict[str, str]
+    HREF: Any
+    BUNDLE: Dict[str, str]
+    PRODUCT: Dict[str, str]
+    BREAD_CRUMB_ELEMENT: Dict[str, str]
+    BREAD_CRUMB: Dict[str, str]
+    ORDER_ID: Any
+    ORDER_DETAILS: Dict[str, str]
+    ORDER_DETAILS_ELEMENTS: Dict[str, str]
+    TRACKING_STAGES: Dict[str, str]
+    TRACKING_TIMESTAMPS: Dict[str, str]
+    PRICE_BREAKDOWN_ELEMENT: Dict[str, str]
+    PRICE_BREAKDOWN_CATEGORIES: Dict[str, str]
+    PRICE_BREAKDOWN_VALUES: Dict[str, str]
+    USER_PURCHASE_STR: str
+    PURCHASEPAGE_LINK: str
+
+
 class Config(BaseModel):
     """Master config object."""
 
     login_config: LogInConfig
-    # model_config: ModelConfig
+    scrapee_config: ScrapeeConfig
 
 
 def find_config_file() -> Path:
@@ -71,7 +98,7 @@ def create_and_validate_config(parsed_config: YAML = None) -> Config:
     # specify the data attribute from the strictyaml YAML type.
     _config = Config(
         login_config=LogInConfig(**parsed_config.data),
-        # model_config=ModelConfig(**parsed_config.data),
+        scrapee_config=ScrapeeConfig(**parsed_config.data),
     )
 
     return _config
