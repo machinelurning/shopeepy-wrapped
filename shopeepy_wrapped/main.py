@@ -1,9 +1,9 @@
 from bs4 import BeautifulSoup
 
-from shopeepy_wrapped.browser_automation.driver_setup import driver
-from shopeepy_wrapped.browser_automation.element_locator import element_id_generator
-from shopeepy_wrapped.browser_automation.scroll import scroll_to_bottom
-from shopeepy_wrapped.browser_automation.webdriverwait import webdriverwait
+from shopeepy_wrapped.browser.driver_setup import driver
+from shopeepy_wrapped.browser.element_locator import element_id_generator
+from shopeepy_wrapped.browser.scroll import scroll_to_bottom
+from shopeepy_wrapped.browser.webdriver_wait import webdriverwait
 from shopeepy_wrapped.config.core import config
 from shopeepy_wrapped.login import login
 from shopeepy_wrapped.scrapee.order import Order

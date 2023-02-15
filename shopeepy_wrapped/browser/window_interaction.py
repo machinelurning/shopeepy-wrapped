@@ -4,7 +4,7 @@ from typing import Dict, Tuple, Union
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 
-from shopeepy_wrapped.browser_automation.driver_setup import driver
+from shopeepy_wrapped.browser.driver_setup import driver
 
 
 def perform_keyboard_actions(input: str) -> None:

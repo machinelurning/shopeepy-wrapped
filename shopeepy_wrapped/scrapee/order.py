@@ -2,9 +2,9 @@ import re
 
 from bs4 import BeautifulSoup
 
-from shopeepy_wrapped.browser_automation.driver_setup import driver
-from shopeepy_wrapped.browser_automation.element_locator import element_id_generator
-from shopeepy_wrapped.browser_automation.webdriverwait import webdriverwait
+from shopeepy_wrapped.browser.driver_setup import driver
+from shopeepy_wrapped.browser.element_locator import element_id_generator
+from shopeepy_wrapped.browser.webdriver_wait import webdriverwait
 from shopeepy_wrapped.config.core import config
 from shopeepy_wrapped.href.href_manipulation import append_site_prefix
 from shopeepy_wrapped.scrapee.product import Product
@@ -20,7 +20,6 @@ class Order:
             purchase_href = append_site_prefix(href_element["href"])
             if config.scrapee_config.USER_PURCHASE_STR in purchase_href:
                 return purchase_href
-        # TODO: If for some reason, there is no purchase_href, skip
 
     def get_href(self):
         try:

@@ -1,6 +1,6 @@
 import numpy as np
 
-from shopeepy_wrapped.browser_automation.element_locator import element_id_generator
+from shopeepy_wrapped.browser.element_locator import element_id_generator
 from shopeepy_wrapped.config.core import config
 
 
