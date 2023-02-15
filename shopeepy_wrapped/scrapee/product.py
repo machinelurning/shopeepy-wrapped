@@ -26,23 +26,33 @@ class Product:
         webdriverwait(config.scrapee_config.BREAD_CRUMB)
 
         product_soup = BeautifulSoup(driver.page_source, features="html.parser")
-        bread_crumb_element = product_soup.find(*element_id_generator(**config.scrapee_config.BREAD_CRUMB_ELEMENT))
+        bread_crumb_element = product_soup.find(
+            *element_id_generator(config.scrapee_config.BREAD_CRUMB_ELEMENT)
+        )
 
-        bread_crumbs = bread_crumb_element.find_all(*element_id_generator(**config.scrapee_config.BREAD_CRUMB))
+        bread_crumbs = bread_crumb_element.find_all(
+            *element_id_generator(config.scrapee_config.BREAD_CRUMB)
+        )
 
         return self.bread_crumb_string(bread_crumbs)
 
     def get_product_names(self):
-        name = self.product_element.find(*element_id_generator(**config.scrapee_config.NAME))
+        name = self.product_element.find(
+            *element_id_generator(config.scrapee_config.NAME)
+        )
 
         return name.text
 
     def get_product_prices(self):
         try:
-            price = self.product_element.find(*element_id_generator(**config.scrapee_config.PRICE)).text.replace("₱",
-                                                                                                                 "").replace(
-                ",",
-                "").strip()
+            price = (
+                self.product_element.find(
+                    *element_id_generator(config.scrapee_config.PRICE)
+                )
+                .text.replace("₱", "")
+                .replace(",", "")
+                .strip()
+            )
             return price
         except AttributeError:
             return None

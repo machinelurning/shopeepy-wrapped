@@ -3,7 +3,7 @@ import time
 from shopeepy_wrapped.browser_automation.driver_setup import driver
 
 
-def scroll_action(timeout):
+def scroll_action(timeout: int) -> None:
     scroll_pause_time = timeout
 
     # Get scroll height
@@ -24,7 +24,7 @@ def scroll_action(timeout):
         last_height = new_height
 
 
-def confirm_scroll_waiting_time():
+def confirm_scroll_waiting_time() -> int:
     print("Enter waiting time during scrolling. Recommended: 3 seconds.")
     print("A longer wait time might be needed if you have a slow connection.")
 
@@ -33,7 +33,7 @@ def confirm_scroll_waiting_time():
     return waiting_time
 
 
-def scroll_to_bottom():
+def scroll_to_bottom() -> None:
     waiting_time = confirm_scroll_waiting_time()
 
     for i in range(3):

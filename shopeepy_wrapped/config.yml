@@ -43,12 +43,14 @@ PURCHASEPAGE_LINK: https://shopee.ph/user/purchase/
 PURCHASES:
   element_tag: div
   attribute: class
-  attribute_value: _6nAGBW
+  attribute_value:
+    - _6nAGBW
 
 NAME:
   element_tag: span
   attribute: class
-  attribute_value: WVc4Oc
+  attribute_value:
+    - WVc4Oc
 
 PRICE:
   element_tag: div
@@ -60,12 +62,14 @@ PRICE:
 STORE:
   element_tag: div
   attribute: class
-  attribute_value: mzsqa6
+  attribute_value:
+    - mzsqa6
 
 STATUS:
   element_tag: div
   attribute: class
-  attribute_value: l4WFo0
+  attribute_value:
+    - l4WFo0
 
 HREF:
   element_tag: a
@@ -73,22 +77,26 @@ HREF:
 BUNDLE:
   element_tag: span
   attribute: class
-  attribute_value: vdofqJ
+  attribute_value:
+    - vdofqJ
 
 PRODUCT:
   element_tag: a
   attribute: class
-  attribute_value: QkIuzE
+  attribute_value:
+    - QkIuzE
 
 BREAD_CRUMB_ELEMENT:
   element_tag: div
   attribute: class
-  attribute_value: flex items-center RnKf-X page-product__breadcrumb
+  attribute_value:
+    - flex items-center RnKf-X page-product__breadcrumb
 
 BREAD_CRUMB:
   element_tag: a
   attribute: class
-  attribute_value: akCPfg
+  attribute_value:
+    - akCPfg
 
 USER_PURCHASE_STR: /user/purchase/order/
 
@@ -98,37 +106,44 @@ ORDER_ID:
 ORDER_DETAILS:
   element_tag: div
   attribute: class
-  attribute_value: Zrxery
+  attribute_value:
+    - Zrxery
 
 ORDER_DETAILS_ELEMENTS:
   element_tag: span
   attribute: class
-  attribute_value: -XHRLL
+  attribute_value:
+    - -XHRLL
 
 TRACKING_STAGES:
   element_tag: div
   attribute: class
-  attribute_value: stepper__step-text
+  attribute_value:
+    - stepper__step-text
 
 TRACKING_TIMESTAMPS:
   element_tag: div
   attribute: class
-  attribute_value: stepper__step-date
+  attribute_value:
+    - stepper__step-date
 
 PRICE_BREAKDOWN_ELEMENT:
   element_tag: div
   attribute: class
-  attribute_value: MqHNeD
+  attribute_value:
+    - MqHNeD
 
 PRICE_BREAKDOWN_CATEGORIES:
   element_tag: div
   attribute: class
-  attribute_value: vXeTuK
+  attribute_value:
+    - vXeTuK
 
 PRICE_BREAKDOWN_VALUES:
   element_tag: div
   attribute: class
-  attribute_value: _30Hj4X
+  attribute_value:
+    - _30Hj4X
 
 
 

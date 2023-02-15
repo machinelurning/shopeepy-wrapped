@@ -6,7 +6,7 @@ from shopeepy_wrapped.browser_automation.scroll import scroll_to_bottom
 from shopeepy_wrapped.browser_automation.webdriverwait import webdriverwait
 from shopeepy_wrapped.config.core import config
 from shopeepy_wrapped.login import login
-from shopeepy_wrapped.scrapee.product import Order
+from shopeepy_wrapped.scrapee.order import Order
 
 
 def main(test=False):
@@ -21,7 +21,7 @@ def main(test=False):
 
     soup = BeautifulSoup(driver.page_source, features="html.parser")
     order_elements = soup.find_all(
-        *element_id_generator(**config.scrapee_config.PURCHASES)
+        *element_id_generator(config.scrapee_config.PURCHASES)
     )
 
     orders = [

@@ -1,10 +1,12 @@
 import pytest
 
-from shopeepy_wrapped.login import login_with_credentials
-from shopeepy_wrapped.config.core import config
 from shopeepy_wrapped.browser_automation.driver_setup import driver
+from shopeepy_wrapped.config.core import config
+from shopeepy_wrapped.login import login_with_credentials
+
+
 def test_login_w_wrong_credentials() -> None:
-    driver.get(config.login_config.LOGINPAGE_LINK)
+    driver.get(config.login_config.LOG_IN_PAGE_LINK)
 
     username = "wrong_username"
     password = "wrong_password"

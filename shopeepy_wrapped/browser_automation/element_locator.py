@@ -1,32 +1,9 @@
-from typing import Dict, Tuple, Union
+from typing import Dict, List, Tuple
 
-
-def element_xpath_generator_by_attribute(
-        element_tag: str, attribute: str = None, attribute_value: str = None
-) -> str:
-    return f"//{element_tag}[@{attribute}='{attribute_value}']"
-
-
-def element_xpath_generator_by_text(
-        element_tag: str, attribute: str = None, attribute_value: str = None
-) -> str:
-    return f"//{element_tag}[{attribute}()='{attribute_value}']"
-
-
-def element_id_generator_tuple(
-        element_tag: str, attribute: str = None, attribute_value: str = None
-) -> Tuple[str, Dict[str, str]]:
-    return element_tag, {attribute: attribute_value}
+from shopeepy_wrapped.config.core import Element
 
 
 def element_id_generator(
-        element_tag: str, attribute: str = None, attribute_value: str = None, xpath: bool = False
-) -> Union[Tuple[str, Dict[str, str]], str]:
-    if element_tag == "text":
-        return element_xpath_generator_by_text(element_tag, attribute, attribute_value)
-    elif xpath:
-        return element_xpath_generator_by_attribute(
-            element_tag, attribute, attribute_value
-        )
-    else:
-        return element_id_generator_tuple(element_tag, attribute, attribute_value)
+    config: Element,
+) -> Tuple[str, Dict[str, List[str]]]:
+    return config["element_tag"], {config["attribute"]: config["attribute_value"]}

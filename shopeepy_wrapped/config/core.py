@@ -1,8 +1,9 @@
 from pathlib import Path
-from typing import Dict, Any
+from typing import List
 
 from pydantic import BaseModel
 from strictyaml import YAML, load
+from typing_extensions import NotRequired, TypedDict
 
 import shopeepy_wrapped
 
@@ -14,17 +15,17 @@ DATASET_DIR = PACKAGE_ROOT / "datasets"
 TRAINED_MODEL_DIR = PACKAGE_ROOT / "trained_models"
 
 
+class Element(TypedDict):
+    element_tag: str
+    attribute: NotRequired[str]
+    attribute_value: NotRequired[List[str]]
+
+
 class LogInConfig(BaseModel):
     """
     Application-level config.
     """
 
-    USERNAME_INPUT: Dict[str, str]
-    PASSWORD_INPUT: Dict[str, str]
-    LOGIN_BUTTON: Dict[str, str]
-    VERIFY_BY_SHOPEEPAY: Dict[str, str]
-    VERIFY_BY_EMAIL_OTP: Dict[str, str]
-    WRONG_CREDENTIALS: Dict[str, str]
     LOGINPAGE_LINK: str
 
 
@@ -33,24 +34,24 @@ class ScrapeeConfig(BaseModel):
     Scraping config.
     """
 
-    PURCHASES: Dict[str, str]
-    NAME: Dict[str, str]
-    PRICE: Any
-    STORE: Dict[str, str]
-    STATUS: Dict[str, str]
-    HREF: Any
-    BUNDLE: Dict[str, str]
-    PRODUCT: Dict[str, str]
-    BREAD_CRUMB_ELEMENT: Dict[str, str]
-    BREAD_CRUMB: Dict[str, str]
-    ORDER_ID: Any
-    ORDER_DETAILS: Dict[str, str]
-    ORDER_DETAILS_ELEMENTS: Dict[str, str]
-    TRACKING_STAGES: Dict[str, str]
-    TRACKING_TIMESTAMPS: Dict[str, str]
-    PRICE_BREAKDOWN_ELEMENT: Dict[str, str]
-    PRICE_BREAKDOWN_CATEGORIES: Dict[str, str]
-    PRICE_BREAKDOWN_VALUES: Dict[str, str]
+    PURCHASES: Element
+    NAME: Element
+    PRICE: Element
+    STORE: Element
+    STATUS: Element
+    HREF: Element
+    BUNDLE: Element
+    PRODUCT: Element
+    BREAD_CRUMB_ELEMENT: Element
+    BREAD_CRUMB: Element
+    ORDER_ID: Element
+    ORDER_DETAILS: Element
+    ORDER_DETAILS_ELEMENTS: Element
+    TRACKING_STAGES: Element
+    TRACKING_TIMESTAMPS: Element
+    PRICE_BREAKDOWN_ELEMENT: Element
+    PRICE_BREAKDOWN_CATEGORIES: Element
+    PRICE_BREAKDOWN_VALUES: Element
     USER_PURCHASE_STR: str
     PURCHASEPAGE_LINK: str
 
