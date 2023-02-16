@@ -7,12 +7,13 @@ from shopeepy_wrapped.browser.element_locator import element_id_generator
 from shopeepy_wrapped.browser.scroll import scroll_to_bottom
 from shopeepy_wrapped.browser.wait import webdriverwait
 from shopeepy_wrapped.config.core import config
-from shopeepy_wrapped.login import login
 from shopeepy_wrapped.scrapee.order import Order
 
 
 def main(test: bool = False) -> Tuple:
-    login()
+    driver.get(config.login_config.LOGINPAGE_LINK)
+
+    input("Press Enter once you've logged in.")
 
     driver.get(config.scrapee_config.PURCHASEPAGE_LINK)
 
@@ -22,6 +23,7 @@ def main(test: bool = False) -> Tuple:
         scroll_to_bottom(waiting_time=3)
 
     soup = BeautifulSoup(driver.page_source, features="html.parser")
+
     order_elements = soup.find_all(
         *element_id_generator(config.scrapee_config.PURCHASES)
     )

@@ -4,20 +4,23 @@ package_name: shopeepy_wrapped
 
 # Login Config
 
-#USERNAME_INPUT:
-#  element_tag: input
-#  attribute: name
-#  attribute_value: loginKey
-#
-#PASSWORD_INPUT:
-#  element_tag: input
-#  attribute: name
-#  attribute_value: password
-#
-#LOGIN_BUTTON:
-#  element_tag: button
-#  attribute: class
-#  attribute_value: wyhvVD _1EApiB hq6WM5 L-VL8Q cepDQ1 _7w24N1
+USERNAME_INPUT:
+  element_tag: input
+  attribute: name
+  attribute_value:
+    - loginKey
+
+PASSWORD_INPUT:
+  element_tag: input
+  attribute: name
+  attribute_value:
+    - password
+
+LOGIN_BUTTON:
+  element_tag: button
+  attribute: class
+  attribute_value:
+    - wyhvVD _1EApiB hq6WM5 L-VL8Q cepDQ1 _7w24N1
 #
 #VERIFY_BY_SHOPEEPAY:
 #  element_tag: div
@@ -29,10 +32,11 @@ package_name: shopeepy_wrapped
 #  attribute: text
 #  attribute_value: Verify by Email Link
 #
-#WRONG_CREDENTIALS:
-#  element_tag: div
-#  attribute: class
-#  attribute_value: gCY-Ye
+WRONG_CREDENTIALS:
+  element_tag: div
+  attribute: class
+  attribute_value:
+    - gCY-Ye
 
 LOGINPAGE_LINK: https://shopee.ph/buyer/login
 

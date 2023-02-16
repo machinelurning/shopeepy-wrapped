@@ -33,12 +33,10 @@ def xpath_generator(config: Element) -> str:
 
 def webdriverwait(config: Element) -> None:
     xpath = xpath_generator(config=config)
-
     try:
         WebDriverWait(driver, 10).until(
             ec.presence_of_element_located((By.XPATH, xpath))
         )
 
-    except TimeoutException as ex:
-        print(ex)
-        print("Webdriver timed out.")
+    except TimeoutException:
+        raise TimeoutException
