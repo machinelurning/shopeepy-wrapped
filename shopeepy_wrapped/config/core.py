@@ -52,6 +52,7 @@ class ScrapeeConfig(BaseModel):
     PRICE_BREAKDOWN_ELEMENT: Element
     PRICE_BREAKDOWN_CATEGORIES: Element
     PRICE_BREAKDOWN_VALUES: Element
+    THUMBNAIL: Element
     USER_PURCHASE_STR: str
     PURCHASEPAGE_LINK: str
 

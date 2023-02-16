@@ -1,6 +1,8 @@
 import re
+from typing import Any, Dict, Tuple
 
 from bs4 import BeautifulSoup
+from bs4.element import ResultSet, Tag
 
 from shopeepy_wrapped.browser.driver_setup import driver
 from shopeepy_wrapped.browser.element_locator import element_id_generator
@@ -11,24 +13,30 @@ from shopeepy_wrapped.scrapee.product import Product
 
 
 class Order:
-    def __init__(self, order_element):
+    def __init__(self, order_element: Tag) -> None:
         self.order_element = order_element
-        self.order_parameters = {}
+        self.order_parameters: Dict = {}
 
-    def select_order_href(self, href_elements):
+    def select_order_href(self, href_elements: ResultSet) -> str | None:
         for href_element in href_elements:
-            purchase_href = append_site_prefix(href_element["href"])
-            if config.scrapee_config.USER_PURCHASE_STR in purchase_href:
-                return purchase_href
+            possible_purchase_href = append_site_prefix(href_element["href"])
+            if config.scrapee_config.USER_PURCHASE_STR in possible_purchase_href:
+                purchase_href = append_site_prefix(href_element["href"])
+                break
 
-    def get_href(self):
+        return purchase_href
+
+    def get_href(self) -> str | None:
         try:
+            print(type(self.order_element.find_all("a")))
             purchase_href = self.select_order_href(self.order_element.find_all("a"))
             return purchase_href
         except AttributeError:
             return None
 
-    def update_order_parameters(self, key_list, value_list):
+    def update_order_parameters(
+        self, key_list: Tuple[Any, ...], value_list: Tuple[Any, ...]
+    ) -> None:
         len_list = len(key_list)
 
         for i in range(len_list):
@@ -36,14 +44,19 @@ class Order:
 
         return None
 
-    def get_order_id(self, order_details_elements):
+    def get_order_id(self, order_details_elements: Tag) -> str:
         possible_order_ids = order_details_elements.find_all("span")
 
         for possible_order_id in possible_order_ids:
             if "ORDER ID" in possible_order_id.text:
-                return possible_order_id.text.replace("ORDER ID. ", "").upper().strip()
+                order_id = (
+                    possible_order_id.text.replace("ORDER ID. ", "").upper().strip()
+                )
+                break
 
-    def get_order_details(self, order_soup):
+        return order_id
+
+    def get_order_details(self, order_soup: BeautifulSoup) -> None:
         order_details_elements = order_soup.find(
             *element_id_generator(config.scrapee_config.ORDER_DETAILS)
         )
@@ -54,12 +67,12 @@ class Order:
         order_id = self.get_order_id(order_details_elements)
 
         self.update_order_parameters(
-            ["order_status", "order_id"], [order_status, order_id]
+            ("order_status", "order_id"), (order_status, order_id)
         )
 
         return None
 
-    def get_tracking_info(self, purchase_soup):
+    def get_tracking_info(self, purchase_soup: BeautifulSoup) -> None:
         tracking_stages = tuple(
             re.sub(r"\(.*?\)", "", stepper.text).strip()
             for stepper in purchase_soup.find_all(
@@ -77,7 +90,7 @@ class Order:
 
         return None
 
-    def get_price_breakdown(self, purchase_soup):
+    def get_price_breakdown(self, purchase_soup: BeautifulSoup) -> None:
         price_breakdown = purchase_soup.find_all(
             *element_id_generator(config.scrapee_config.PRICE_BREAKDOWN_ELEMENT)
         )
@@ -108,19 +121,19 @@ class Order:
 
         return None
 
-    def scrape_products(self, soup):
+    def scrape_products(self, soup: BeautifulSoup) -> None:
         product_elements = soup.find_all(
             *element_id_generator(config.scrapee_config.PRODUCT)
         )
 
-        product_details = [
+        product_details = tuple(
             Product(product_element).get_product_details()
             for product_element in product_elements
-        ]
+        )
 
-        self.update_order_parameters(["products"], [product_details])
+        self.update_order_parameters(("products",), (product_details,))
 
-    def get_order_parameters(self):
+    def get_order_parameters(self) -> Dict:
         driver.get(self.get_href())
 
         webdriverwait(config.scrapee_config.ORDER_DETAILS)

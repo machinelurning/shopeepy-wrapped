@@ -31,7 +31,9 @@ def webdriverwait(config: Element) -> None:
     xpath = element_tag + attr_str
 
     try:
-        WebDriverWait(driver, 10).until(ec.presence_of_element_located((By.XPATH, xpath)))
+        WebDriverWait(driver, 10).until(
+            ec.presence_of_element_located((By.XPATH, xpath))
+        )
 
     except TimeoutException as ex:
         print(ex)

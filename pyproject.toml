@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["IK Manding <github@ianmanding.net>"]
 readme = "README.md"
-packages = [{include = "shopeepy_wrapped"}]
+packages = [{ include = "shopeepy_wrapped" }]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -18,7 +18,9 @@ strictyaml = "^1.6.2"
 pathlib = "^1.0.1"
 numpy = "^1.24.2"
 
-[tool.poetry.group.test.dependencies]
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.21.2"
 pytest = "^7.2.1"
 mypy = "^1.0.0"
 flake8 = "^6.0.0"

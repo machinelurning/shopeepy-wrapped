@@ -1,15 +1,18 @@
-import numpy as np
+from typing import Dict
+
+from bs4.element import Tag
 
 from shopeepy_wrapped.browser.element_locator import element_id_generator
 from shopeepy_wrapped.config.core import config
 
 
 class Product:
-    def __init__(self, product_element):
+    def __init__(self, product_element: Tag) -> None:
         self.product_element = product_element
         # self.product_bread_crumb = None
-        self.product_name = None
-        self.product_price = None
+        self.product_name: str | None = None
+        self.product_price: str | None = None
+        self.product_thumbnail: str | None = None
 
     # def bread_crumb_string(self, bread_crumbs):
     #     bread_crumb_levels = [
@@ -39,16 +42,16 @@ class Product:
     #     except AttributeError:
     #         return np.nan
 
-    def get_product_names(self):
+    def get_product_names(self) -> str | None:
         try:
             name = self.product_element.find(
                 *element_id_generator(config.scrapee_config.NAME)
             )
-            print(name.text)
+            return name.text
         except AttributeError:
-            return np.nan
+            return None
 
-    def get_product_prices(self):
+    def get_product_prices(self) -> str | None:
         try:
             price = (
                 self.product_element.find(
@@ -61,16 +64,31 @@ class Product:
             return price
 
         except AttributeError:
-            return np.nan
+            return None
 
-    def get_product_parameters(self):
+    def get_product_thumbnail(self) -> str | None:
+        try:
+            thumbnail_href = self.product_element.find(
+                *element_id_generator(config.scrapee_config.THUMBNAIL)
+            )
+
+            thumbnail_href = thumbnail_href["style"]
+            thumbnail_href = thumbnail_href[
+                thumbnail_href.find("(") + 1 : thumbnail_href.find(")")
+            ]
+            return thumbnail_href
+
+        except AttributeError:
+            return None
+
+    def get_product_parameters(self) -> None:
         self.product_name = self.get_product_names()
         self.product_price = self.get_product_prices()
-
+        self.product_thumbnail = self.get_product_thumbnail()
         # product_link = append_site_prefix(self.product_element["href"])
         # self.product_bread_crumb = self.get_bread_crumbs(product_link)
 
-    def get_product_details(self):
+    def get_product_details(self) -> Dict:
         product_details = {}
 
         self.get_product_parameters()
