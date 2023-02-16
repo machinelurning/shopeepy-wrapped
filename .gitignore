@@ -74,6 +74,9 @@ docs/_build/
 .pybuilder/
 target/
 
+# Pre-commit hooks
+.pre-commit-config.yaml
+
 # Jupyter Notebook
 .ipynb_checkpoints
 *.ipynb
