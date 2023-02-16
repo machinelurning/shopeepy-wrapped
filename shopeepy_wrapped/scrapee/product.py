@@ -25,7 +25,7 @@ class Product:
     # def get_bread_crumbs(self, href):
     #     driver.get(href)
     #     try:
-    #         webdriverwait(config.scrapee_config.BREAD_CRUMB)
+    #         webdriverwait_by_config(config.scrapee_config.BREAD_CRUMB)
     #         product_soup = BeautifulSoup(driver.page_source, features="html.parser")
     #         bread_crumb_element = product_soup.find(
     #             *element_id_generator(config.scrapee_config.BREAD_CRUMB_ELEMENT)

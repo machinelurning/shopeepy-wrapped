@@ -6,7 +6,7 @@ from bs4.element import ResultSet, Tag
 
 from shopeepy_wrapped.browser.driver_setup import driver
 from shopeepy_wrapped.browser.element_locator import element_id_generator
-from shopeepy_wrapped.browser.wait import webdriverwait
+from shopeepy_wrapped.browser.wait import webdriverwait_by_config
 from shopeepy_wrapped.config.core import config
 from shopeepy_wrapped.href.href_manipulation import append_site_prefix
 from shopeepy_wrapped.scrapee.product import Product
@@ -150,7 +150,7 @@ class Order:
     def get_order_parameters(self) -> None:
         driver.get(self.get_href())
 
-        webdriverwait(config=config.scrapee_config.ORDER_DETAILS)
+        webdriverwait_by_config(config=config.scrapee_config.ORDER_DETAILS)
 
         soup = BeautifulSoup(driver.page_source, features="html.parser")
 

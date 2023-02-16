@@ -24,11 +24,7 @@ LOGIN_BUTTON:
   attribute_value:
     - wyhvVD _1EApiB hq6WM5 L-VL8Q cepDQ1 _7w24N1
 
-VERIFY_BY_EMAIL_LINK:
-  element_tag: div
-  attribute: text
-  attribute_value:
-    - Verify by Email Link
+VERIFY_BY_EMAIL_LINK: //div[text()='Verify by Email Link']
 
 WRONG_CREDENTIALS:
   element_tag: div

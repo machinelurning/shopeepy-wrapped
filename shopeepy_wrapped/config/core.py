@@ -27,11 +27,11 @@ class LogInConfig(BaseModel):
     """
 
     LOGINPAGE_LINK: str
+    VERIFY_BY_EMAIL_LINK: str
     USERNAME_INPUT: Element
     PASSWORD_INPUT: Element
     LOGIN_BUTTON: Element
     LOGIN_CONFIRM: Element
-    VERIFY_BY_EMAIL_LINK: Element
     WRONG_CREDENTIALS: Element
 
 
