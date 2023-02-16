@@ -7,7 +7,7 @@ from shopeepy_wrapped.browser.driver_setup import driver
 from shopeepy_wrapped.config.core import Element
 
 
-def xpath_generator(config: Element) -> str:
+def xpath_attr_val_generator(config: Element) -> str:
     attr_str = f'@{config["attribute"]} = '
 
     num_attr_vals = len(config["attribute_value"])
@@ -24,11 +24,15 @@ def xpath_generator(config: Element) -> str:
     return "[" + attr_str[:-4] + "]"
 
 
-def webdriverwait(config: Element) -> None:
-    attr_str = xpath_generator(config)
+def xpath_generator(config: Element) -> str:
+    attr_str = xpath_attr_val_generator(config=config)
     element_tag = f"//{config['element_tag']}"
 
-    xpath = element_tag + attr_str
+    return element_tag + attr_str
+
+
+def webdriverwait(config: Element) -> None:
+    xpath = xpath_generator(config=config)
 
     try:
         WebDriverWait(driver, 10).until(

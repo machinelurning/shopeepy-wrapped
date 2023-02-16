@@ -19,7 +19,7 @@ def main(test: bool = False) -> Tuple:
     webdriverwait(config.scrapee_config.PURCHASES)
 
     if not test:
-        scroll_to_bottom()
+        scroll_to_bottom(waiting_time=3)
 
     soup = BeautifulSoup(driver.page_source, features="html.parser")
     order_elements = soup.find_all(

@@ -47,7 +47,7 @@ class Product:
     def get_product_names(self) -> str | None:
         try:
             name = self.product_element.find(
-                *element_id_generator(config.scrapee_config.NAME)
+                *element_id_generator(config=config.scrapee_config.NAME)
             )
             return name.text
         except AttributeError:
@@ -57,7 +57,7 @@ class Product:
         try:
             price = (
                 self.product_element.find(
-                    *element_id_generator(config.scrapee_config.PRICE)
+                    *element_id_generator(config=config.scrapee_config.PRICE)
                 )
                 .text.replace("₱", "")
                 .replace(",", "")
@@ -71,7 +71,7 @@ class Product:
     def get_product_thumbnail(self) -> str | None:
         try:
             thumbnail_href = self.product_element.find(
-                *element_id_generator(config.scrapee_config.THUMBNAIL)
+                *element_id_generator(config=config.scrapee_config.THUMBNAIL)
             )
 
             thumbnail_href = thumbnail_href["style"]

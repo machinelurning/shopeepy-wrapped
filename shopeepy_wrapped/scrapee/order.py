@@ -20,16 +20,20 @@ class Order:
 
     def select_order_href(self, href_elements: ResultSet) -> str | None:
         for href_element in href_elements:
-            possible_purchase_href = append_site_prefix(href_element["href"])
+            possible_purchase_href = append_site_prefix(
+                incomplete_href=href_element["href"]
+            )
             if config.scrapee_config.USER_PURCHASE_STR in possible_purchase_href:
-                purchase_href = append_site_prefix(href_element["href"])
+                purchase_href = append_site_prefix(incomplete_href=href_element["href"])
                 break
 
         return purchase_href
 
     def get_href(self) -> str | None:
         try:
-            purchase_href = self.select_order_href(self.order_element.find_all("a"))
+            purchase_href = self.select_order_href(
+                href_elements=self.order_element.find_all("a")
+            )
             return purchase_href
         except AttributeError:
             return None
@@ -58,46 +62,50 @@ class Order:
 
     def get_order_details(self, order_soup: BeautifulSoup) -> None:
         order_details_elements = order_soup.find(
-            *element_id_generator(config.scrapee_config.ORDER_DETAILS)
+            *element_id_generator(config=config.scrapee_config.ORDER_DETAILS)
         )
 
         order_status = order_details_elements.find(
-            *element_id_generator(config.scrapee_config.ORDER_DETAILS_ELEMENTS)
+            *element_id_generator(config=config.scrapee_config.ORDER_DETAILS_ELEMENTS)
         ).text.upper()
         order_id = self.get_order_id(order_details_elements)
 
         self.update_order_parameters(
-            ("order_status", "order_id"), (order_status, order_id)
+            key_list=("order_status", "order_id"), value_list=(order_status, order_id)
         )
 
         return None
 
-    def get_tracking_info(self, purchase_soup: BeautifulSoup) -> None:
+    def get_tracking_info(self, order_soup: BeautifulSoup) -> None:
         tracking_stages = tuple(
             re.sub(r"\(.*?\)", "", stepper.text).strip()
-            for stepper in purchase_soup.find_all(
-                *element_id_generator(config.scrapee_config.TRACKING_STAGES)
+            for stepper in order_soup.find_all(
+                *element_id_generator(config=config.scrapee_config.TRACKING_STAGES)
             )
         )
         tracking_timestamps = tuple(
             stepper.text
-            for stepper in purchase_soup.find_all(
-                *element_id_generator(config.scrapee_config.TRACKING_TIMESTAMPS)
+            for stepper in order_soup.find_all(
+                *element_id_generator(config=config.scrapee_config.TRACKING_TIMESTAMPS)
             )
         )
 
-        self.update_order_parameters(tracking_stages, tracking_timestamps)
+        self.update_order_parameters(
+            key_list=tracking_stages, value_list=tracking_timestamps
+        )
 
         return None
 
-    def get_price_breakdown(self, purchase_soup: BeautifulSoup) -> None:
-        price_breakdown = purchase_soup.find_all(
-            *element_id_generator(config.scrapee_config.PRICE_BREAKDOWN_ELEMENT)
+    def get_price_breakdown(self, order_soup: BeautifulSoup) -> None:
+        price_breakdown = order_soup.find_all(
+            *element_id_generator(config=config.scrapee_config.PRICE_BREAKDOWN_ELEMENT)
         )
 
         price_breakdown_category = tuple(
             row.find(
-                *element_id_generator(config.scrapee_config.PRICE_BREAKDOWN_CATEGORIES)
+                *element_id_generator(
+                    config=config.scrapee_config.PRICE_BREAKDOWN_CATEGORIES
+                )
             ).text
             for row in price_breakdown
         )
@@ -110,40 +118,46 @@ class Order:
 
         price_breakdown_value = tuple(
             row.find(
-                *element_id_generator(config.scrapee_config.PRICE_BREAKDOWN_VALUES)
+                *element_id_generator(
+                    config=config.scrapee_config.PRICE_BREAKDOWN_VALUES
+                )
             )
             .text.replace("₱", "")
             .replace(",", "")
             for row in price_breakdown
         )
 
-        self.update_order_parameters(price_breakdown_category, price_breakdown_value)
+        self.update_order_parameters(
+            key_list=price_breakdown_category, value_list=price_breakdown_value
+        )
 
         return None
 
-    def scrape_products(self, soup: BeautifulSoup) -> None:
-        product_elements = soup.find_all(
-            *element_id_generator(config.scrapee_config.PRODUCT)
+    def scrape_products(self, order_soup: BeautifulSoup) -> None:
+        product_elements = order_soup.find_all(
+            *element_id_generator(config=config.scrapee_config.PRODUCT)
         )
 
         product_details = tuple(
-            Product(product_element).product_details
+            Product(product_element=product_element).product_details
             for product_element in product_elements
         )
 
-        self.update_order_parameters(("products",), (product_details,))
+        self.update_order_parameters(
+            key_list=("products",), value_list=(product_details,)
+        )
 
     def get_order_parameters(self) -> None:
         driver.get(self.get_href())
 
-        webdriverwait(config.scrapee_config.ORDER_DETAILS)
+        webdriverwait(config=config.scrapee_config.ORDER_DETAILS)
 
         soup = BeautifulSoup(driver.page_source, features="html.parser")
 
         #  Scrape Order-Level Details
-        self.get_order_details(soup)
-        self.get_tracking_info(soup)
-        self.get_price_breakdown(soup)
+        self.get_order_details(order_soup=soup)
+        self.get_tracking_info(order_soup=soup)
+        self.get_price_breakdown(order_soup=soup)
 
         # Scrape Product-Level Details
-        self.scrape_products(soup)
+        self.scrape_products(order_soup=soup)

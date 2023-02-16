@@ -9,7 +9,6 @@ def setup_chromedriver() -> webdriver:
     chrome_options.add_argument("--incognito")
 
     _driver = webdriver.Chrome(options=chrome_options)
-    _driver.maximize_window()
 
     return _driver
 
