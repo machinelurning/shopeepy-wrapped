@@ -13,6 +13,8 @@ class Product:
         self.product_name: str | None = None
         self.product_price: str | None = None
         self.product_thumbnail: str | None = None
+        self.product_details: Dict = {}
+        self.get_product_details()
 
     # def bread_crumb_string(self, bread_crumbs):
     #     bread_crumb_levels = [
@@ -88,13 +90,9 @@ class Product:
         # product_link = append_site_prefix(self.product_element["href"])
         # self.product_bread_crumb = self.get_bread_crumbs(product_link)
 
-    def get_product_details(self) -> Dict:
-        product_details = {}
-
+    def get_product_details(self) -> None:
         self.get_product_parameters()
 
         for attr, value in self.__dict__.items():
             if attr != "product_element":
-                product_details[attr] = value
-
-        return product_details
+                self.product_details[attr] = value

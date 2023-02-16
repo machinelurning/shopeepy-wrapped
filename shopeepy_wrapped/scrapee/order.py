@@ -16,6 +16,7 @@ class Order:
     def __init__(self, order_element: Tag) -> None:
         self.order_element = order_element
         self.order_parameters: Dict = {}
+        self.get_order_parameters()
 
     def select_order_href(self, href_elements: ResultSet) -> str | None:
         for href_element in href_elements:
@@ -28,14 +29,13 @@ class Order:
 
     def get_href(self) -> str | None:
         try:
-            print(type(self.order_element.find_all("a")))
             purchase_href = self.select_order_href(self.order_element.find_all("a"))
             return purchase_href
         except AttributeError:
             return None
 
     def update_order_parameters(
-        self, key_list: Tuple[Any, ...], value_list: Tuple[Any, ...]
+            self, key_list: Tuple[Any, ...], value_list: Tuple[Any, ...]
     ) -> None:
         len_list = len(key_list)
 
@@ -127,13 +127,13 @@ class Order:
         )
 
         product_details = tuple(
-            Product(product_element).get_product_details()
+            Product(product_element).product_details
             for product_element in product_elements
         )
 
         self.update_order_parameters(("products",), (product_details,))
 
-    def get_order_parameters(self) -> Dict:
+    def get_order_parameters(self) -> None:
         driver.get(self.get_href())
 
         webdriverwait(config.scrapee_config.ORDER_DETAILS)
@@ -147,5 +147,3 @@ class Order:
 
         # Scrape Product-Level Details
         self.scrape_products(soup)
-
-        return self.order_parameters
