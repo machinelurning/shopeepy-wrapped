@@ -6,7 +6,7 @@ from bs4.element import ResultSet, Tag
 
 from shopeepy_wrapped.browser.driver_setup import driver
 from shopeepy_wrapped.browser.element_locator import element_id_generator
-from shopeepy_wrapped.browser.webdriver_wait import webdriverwait
+from shopeepy_wrapped.browser.wait import webdriverwait
 from shopeepy_wrapped.config.core import config
 from shopeepy_wrapped.href.href_manipulation import append_site_prefix
 from shopeepy_wrapped.scrapee.product import Product
@@ -35,7 +35,7 @@ class Order:
             return None
 
     def update_order_parameters(
-        self, key_list: Tuple[Any, ...], value_list: Tuple[Any, ...]
+            self, key_list: Tuple[Any, ...], value_list: Tuple[Any, ...]
     ) -> None:
         len_list = len(key_list)
 
