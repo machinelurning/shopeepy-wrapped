@@ -76,8 +76,8 @@ class Product:
 
             thumbnail_href = thumbnail_href["style"]
             thumbnail_href = thumbnail_href[
-                thumbnail_href.find("(") + 1 : thumbnail_href.find(")")
-            ]
+                             thumbnail_href.find("(") + 1: thumbnail_href.find(")")
+                             ]
             return thumbnail_href
 
         except AttributeError:
@@ -94,5 +94,5 @@ class Product:
         self.get_product_parameters()
 
         for attr, value in self.__dict__.items():
-            if attr != "product_element":
+            if attr not in ["product_details", "product_element"]:
                 self.product_details[attr] = value
