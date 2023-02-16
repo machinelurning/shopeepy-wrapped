@@ -27,6 +27,12 @@ class LogInConfig(BaseModel):
     """
 
     LOGINPAGE_LINK: str
+    USERNAME_INPUT: Element
+    PASSWORD_INPUT: Element
+    LOGIN_BUTTON: Element
+    LOGIN_CONFIRM: Element
+    VERIFY_BY_EMAIL_LINK: Element
+    WRONG_CREDENTIALS: Element
 
 
 class ScrapeeConfig(BaseModel):
@@ -34,6 +40,8 @@ class ScrapeeConfig(BaseModel):
     Scraping config.
     """
 
+    USER_PURCHASE_STR: str
+    PURCHASEPAGE_LINK: str
     PURCHASES: Element
     NAME: Element
     PRICE: Element
@@ -53,8 +61,6 @@ class ScrapeeConfig(BaseModel):
     PRICE_BREAKDOWN_CATEGORIES: Element
     PRICE_BREAKDOWN_VALUES: Element
     THUMBNAIL: Element
-    USER_PURCHASE_STR: str
-    PURCHASEPAGE_LINK: str
 
 
 class Config(BaseModel):
