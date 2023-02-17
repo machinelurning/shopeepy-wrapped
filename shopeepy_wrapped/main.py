@@ -11,13 +11,9 @@ from shopeepy_wrapped.scrapee.order import Order
 
 
 def main(test: bool = False) -> Tuple:
-    driver.get(config.login_config.LOGINPAGE_LINK)
-
-    input("Press Enter once you've logged in.")
-
     driver.get(config.scrapee_config.PURCHASEPAGE_LINK)
 
-    webdriverwait_by_config(config.scrapee_config.PURCHASES)
+    webdriverwait_by_config(config=config.scrapee_config.PURCHASES)
 
     if not test:
         scroll_to_bottom(waiting_time=3)

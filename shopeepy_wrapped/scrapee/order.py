@@ -21,10 +21,10 @@ class Order:
     def select_order_href(self, href_elements: ResultSet) -> str | None:
         for href_element in href_elements:
             possible_purchase_href = append_site_prefix(
-                incomplete_href=href_element["string_manipulation"]
+                incomplete_href=href_element["href"]
             )
             if config.scrapee_config.USER_PURCHASE_STR in possible_purchase_href:
-                purchase_href = append_site_prefix(incomplete_href=href_element["string_manipulation"])
+                purchase_href = append_site_prefix(incomplete_href=href_element["href"])
                 break
 
         return purchase_href
