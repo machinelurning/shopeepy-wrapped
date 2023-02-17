@@ -8,8 +8,8 @@ from shopeepy_wrapped.browser.driver_setup import driver
 from shopeepy_wrapped.browser.element_locator import element_id_generator
 from shopeepy_wrapped.browser.wait import webdriverwait_by_config
 from shopeepy_wrapped.config.core import config
-from shopeepy_wrapped.href.href_manipulation import append_site_prefix
 from shopeepy_wrapped.scrapee.product import Product
+from shopeepy_wrapped.string_manipulation.href_manipulation import append_site_prefix
 
 
 class Order:
@@ -21,10 +21,10 @@ class Order:
     def select_order_href(self, href_elements: ResultSet) -> str | None:
         for href_element in href_elements:
             possible_purchase_href = append_site_prefix(
-                incomplete_href=href_element["href"]
+                incomplete_href=href_element["string_manipulation"]
             )
             if config.scrapee_config.USER_PURCHASE_STR in possible_purchase_href:
-                purchase_href = append_site_prefix(incomplete_href=href_element["href"])
+                purchase_href = append_site_prefix(incomplete_href=href_element["string_manipulation"])
                 break
 
         return purchase_href

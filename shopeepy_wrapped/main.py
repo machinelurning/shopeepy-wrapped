@@ -2,9 +2,9 @@ from typing import Tuple
 
 from bs4 import BeautifulSoup
 
+from shopeepy_wrapped.browser.action import scroll_to_bottom
 from shopeepy_wrapped.browser.driver_setup import driver
 from shopeepy_wrapped.browser.element_locator import element_id_generator
-from shopeepy_wrapped.browser.scroll import scroll_to_bottom
 from shopeepy_wrapped.browser.wait import webdriverwait_by_config
 from shopeepy_wrapped.config.core import config
 from shopeepy_wrapped.scrapee.order import Order

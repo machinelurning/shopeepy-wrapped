@@ -9,40 +9,11 @@ from shopeepy_wrapped.config.core import config
 class Product:
     def __init__(self, product_element: Tag) -> None:
         self.product_element = product_element
-        # self.product_bread_crumb = None
         self.product_name: str | None = None
         self.product_price: str | None = None
         self.product_thumbnail: str | None = None
         self.product_details: Dict = {}
         self.get_product_details()
-
-    # def bread_crumb_string(self, bread_crumbs):
-    #     bread_crumb_levels = [
-    #         bread_crumb_level.text for bread_crumb_level in bread_crumbs
-    #     ]
-    #     return " > ".join(bread_crumb_levels)
-    #
-    # def get_bread_crumbs(self, href):
-    #     driver.get(href)
-    #     try:
-    #         webdriverwait_by_config(config.scrapee_config.BREAD_CRUMB)
-    #         product_soup = BeautifulSoup(driver.page_source, features="html.parser")
-    #         bread_crumb_element = product_soup.find(
-    #             *element_id_generator(config.scrapee_config.BREAD_CRUMB_ELEMENT)
-    #         )
-    #
-    #         bread_crumbs = bread_crumb_element.find_all(
-    #             *element_id_generator(config.scrapee_config.BREAD_CRUMB)
-    #         )
-    #
-    #         return self.bread_crumb_string(bread_crumbs)
-    #
-    #     except TimeoutException:
-    #         print("Product does not exist anymore.")
-    #         return np.nan
-    #
-    #     except AttributeError:
-    #         return np.nan
 
     def get_product_names(self) -> str | None:
         try:
@@ -87,8 +58,6 @@ class Product:
         self.product_name = self.get_product_names()
         self.product_price = self.get_product_prices()
         self.product_thumbnail = self.get_product_thumbnail()
-        # product_link = append_site_prefix(self.product_element["href"])
-        # self.product_bread_crumb = self.get_bread_crumbs(product_link)
 
     def get_product_details(self) -> None:
         self.get_product_parameters()

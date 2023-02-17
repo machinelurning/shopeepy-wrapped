@@ -1,6 +1,3 @@
-import time
-
-from bs4 import BeautifulSoup
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 
@@ -10,9 +7,9 @@ from shopeepy_wrapped.browser.wait import (
     webdriverwait_by_config,
     webdriverwait_by_xpath,
 )
-from shopeepy_wrapped.browser.xpath import xpath_generator
 from shopeepy_wrapped.config.core import config
 from shopeepy_wrapped.shopee_login.credentials import get_credentials
+from shopeepy_wrapped.string_manipulation.xpath_manipulation import xpath_generator
 
 
 class IncorrectCredentials(Exception):
@@ -22,35 +19,39 @@ class IncorrectCredentials(Exception):
 def correct_credentials() -> bool:
     try:
         webdriverwait_by_config(config=config.login_config.WRONG_CREDENTIALS)
-        return False
     except TimeoutException:
         return True
+    return False
 
 
 def login_success_watcher(retries: int = 50) -> bool:
     for i in range(retries):
-        time.sleep(5)
-        soup = BeautifulSoup(driver.page_source, features="html.parser")
-        logged_in = soup.find(config.login_config.LOGIN_CONFIRM)
-        print(logged_in)
-
-        if logged_in:
+        try:
+            webdriverwait_by_config(
+                config=config.login_config.LOGIN_CONFIRM, timeout_sec=2
+            )
             return True
+        except TimeoutException:
+            pass
 
-    raise TimeoutException
+    raise TimeoutException("Maximum retries exceeded.")
+
+
+def verification_needed() -> bool:
+    try:
+        webdriverwait_by_xpath(xpath=config.login_config.VERIFY_BY_EMAIL_LINK)
+    except TimeoutException:
+        return False
+
+    return True
 
 
 def verify_by_email_link() -> bool:
-    try:
-        webdriverwait_by_xpath(config.login_config.VERIFY_BY_EMAIL_LINK)
-    except TimeoutException:
-        return True
+    if not verification_needed():
+        return login_success_watcher()
 
     click_button(config.login_config.VERIFY_BY_EMAIL_LINK)
-
-    verified_by_email = login_success_watcher()
-
-    return verified_by_email
+    return login_success_watcher()
 
 
 def login_with_credentials(username: str) -> bool:
@@ -73,6 +74,6 @@ def login_with_credentials(username: str) -> bool:
     click_button(xpath_generator(config=config.login_config.LOGIN_BUTTON))
 
     if not correct_credentials():
-        raise IncorrectCredentials
+        raise IncorrectCredentials("Username and/or password are incorrect.")
 
     return True
