@@ -63,11 +63,16 @@ class ScrapeeConfig(BaseModel):
     THUMBNAIL: Element
 
 
+class DataCleaningConfig(BaseModel):
+    ORDERS_KEEP_COLS: List[str]
+
+
 class Config(BaseModel):
     """Master config object."""
 
     login_config: LogInConfig
     scrapee_config: ScrapeeConfig
+    data_cleaning_config: DataCleaningConfig
 
 
 def find_config_file() -> Path:
@@ -107,6 +112,7 @@ def create_and_validate_config(parsed_config: YAML = None) -> Config:
     _config = Config(
         login_config=LogInConfig(**parsed_config.data),
         scrapee_config=ScrapeeConfig(**parsed_config.data),
+        data_cleaning_config=DataCleaningConfig(**parsed_config.data),
     )
 
     return _config

@@ -38,7 +38,6 @@ LOGIN_CONFIRM:
   attribute_value:
     - navbar__username
 
-
 # Scrape Config
 
 PURCHASEPAGE_LINK: https://shopee.ph/user/purchase/
@@ -153,3 +152,25 @@ PRICE_BREAKDOWN_VALUES:
   attribute: class
   attribute_value:
     - _30Hj4X
+
+# Data Cleaning Config
+
+ORDERS_KEEP_COLS:
+  - order_status
+  - order_id
+  - order_placed
+  - order_paid
+  - order_shipped_out
+  - order_received
+  - order_completed
+  - merchandise_subtotal
+  - shipping_fee
+  - shipping_discount_subtotal
+  - order_total
+  - payment_method
+  - order_cancelled
+  - redeemed_shopee_coins
+  - shopee_voucher_applied
+  - shopee_coins_earned
+  - shop_voucher_applied
+  - return_refund_accepted
