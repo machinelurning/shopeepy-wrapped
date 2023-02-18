@@ -1,3 +1,13 @@
+"""
+
+```browser.action``` Module
+
+This module is used to perform actions on the
+browser such as scrolling, clicking, and even
+keyboard actions.
+
+"""
+
 import time
 
 from selenium.webdriver.common.action_chains import ActionChains
