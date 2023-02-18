@@ -47,8 +47,8 @@ class Product:
 
             thumbnail_href = thumbnail_href["style"]
             thumbnail_href = thumbnail_href[
-                             thumbnail_href.find("(") + 1: thumbnail_href.find(")")
-                             ]
+                thumbnail_href.find("(") + 1 : thumbnail_href.find(")")
+            ]
             return thumbnail_href
 
         except AttributeError:

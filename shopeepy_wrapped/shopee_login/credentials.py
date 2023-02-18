@@ -4,7 +4,7 @@ from shopeepy_wrapped.config.core import InvalidCredentials
 
 
 def set_credentials(
-        username: str, password: str, app: str = "shopeepay-wrapped"
+    username: str, password: str, app: str = "shopeepy-wrapped"
 ) -> None:
     if not isinstance(username, str) or not isinstance(password, str):
         raise InvalidCredentials("Username/password should be string type.")
@@ -12,5 +12,5 @@ def set_credentials(
     set_password(app, username, password)
 
 
-def get_credentials(username: str, app: str = "shopeepay-wrapped") -> str:
+def get_credentials(username: str, app: str = "shopeepy-wrapped") -> str:
     return get_password(app, username)
