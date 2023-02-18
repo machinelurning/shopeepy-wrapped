@@ -7,13 +7,9 @@ from shopeepy_wrapped.browser.wait import (
     webdriverwait_by_config,
     webdriverwait_by_xpath,
 )
-from shopeepy_wrapped.config.core import config
+from shopeepy_wrapped.config.core import InvalidCredentials, config
 from shopeepy_wrapped.shopee_login.credentials import get_credentials
 from shopeepy_wrapped.string_manipulation.xpath_manipulation import xpath_generator
-
-
-class IncorrectCredentials(Exception):
-    pass
 
 
 def correct_credentials() -> bool:
@@ -74,6 +70,6 @@ def login_with_credentials(username: str) -> bool:
     click_button(xpath_generator(config=config.login_config.LOGIN_BUTTON))
 
     if not correct_credentials():
-        raise IncorrectCredentials("Username and/or password are incorrect.")
+        raise InvalidCredentials("Username and/or password are incorrect.")
 
     return True

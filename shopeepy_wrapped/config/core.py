@@ -12,7 +12,10 @@ PACKAGE_ROOT = Path(shopeepy_wrapped.__file__).resolve().parent
 ROOT = PACKAGE_ROOT.parent
 CONFIG_FILE_PATH = PACKAGE_ROOT / "config.yml"
 DATASET_DIR = PACKAGE_ROOT / "datasets"
-TRAINED_MODEL_DIR = PACKAGE_ROOT / "trained_models"
+
+
+class InvalidCredentials(Exception):
+    pass
 
 
 class Element(TypedDict):
@@ -63,8 +66,10 @@ class ScrapeeConfig(BaseModel):
     THUMBNAIL: Element
 
 
-class DataCleaningConfig(BaseModel):
+class DataConfig(BaseModel):
     ORDERS_KEEP_COLS: List[str]
+    ORDERS_UNCLEANED_FILENAME: str
+    PRODUCTS_UNCLEANED_FILENAME: str
 
 
 class Config(BaseModel):
@@ -72,7 +77,7 @@ class Config(BaseModel):
 
     login_config: LogInConfig
     scrapee_config: ScrapeeConfig
-    data_cleaning_config: DataCleaningConfig
+    data_config: DataConfig
 
 
 def find_config_file() -> Path:
@@ -112,7 +117,7 @@ def create_and_validate_config(parsed_config: YAML = None) -> Config:
     _config = Config(
         login_config=LogInConfig(**parsed_config.data),
         scrapee_config=ScrapeeConfig(**parsed_config.data),
-        data_cleaning_config=DataCleaningConfig(**parsed_config.data),
+        data_config=DataConfig(**parsed_config.data),
     )
 
     return _config

@@ -153,7 +153,7 @@ PRICE_BREAKDOWN_VALUES:
   attribute_value:
     - _30Hj4X
 
-# Data Cleaning Config
+# Data Config
 
 ORDERS_KEEP_COLS:
   - order_status
@@ -174,3 +174,7 @@ ORDERS_KEEP_COLS:
   - shopee_coins_earned
   - shop_voucher_applied
   - return_refund_accepted
+
+ORDERS_UNCLEANED_FILENAME: unclean_orders_df.pkl
+
+PRODUCTS_UNCLEANED_FILENAME: unclean_products_df.pkl
