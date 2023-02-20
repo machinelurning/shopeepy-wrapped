@@ -175,6 +175,6 @@ ORDERS_KEEP_COLS:
   - shop_voucher_applied
   - return_refund_accepted
 
-ORDERS_UNCLEANED_FILENAME: unclean_orders_df.pkl
+ORDERS_UNCLEANED_FILENAME: unclean_orders_df.csv
 
-PRODUCTS_UNCLEANED_FILENAME: unclean_products_df.pkl
+PRODUCTS_UNCLEANED_FILENAME: unclean_products_df.csv

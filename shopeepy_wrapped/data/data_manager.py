@@ -11,5 +11,5 @@ def load_dataset(file_name: str) -> pd.DataFrame:
 
 
 def save_dataset(file_name: str, dataset: pd.DataFrame) -> None:
-    dataset.to_csv(Path(f"{DATASET_DIR}/{file_name}"))
+    dataset.to_csv(Path(f"{DATASET_DIR}/{file_name}"), index=False)
     return None

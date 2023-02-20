@@ -1,3 +1,5 @@
+import time
+
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 
@@ -34,6 +36,8 @@ def login_success_watcher(retries: int = 50) -> bool:
 
 
 def verification_needed() -> bool:
+    time.sleep(10)
+
     try:
         webdriverwait_by_xpath(xpath=config.login_config.VERIFY_BY_EMAIL_LINK)
     except TimeoutException:

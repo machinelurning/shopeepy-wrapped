@@ -14,12 +14,12 @@ def trim_cols_orders_df(df_orders: pd.DataFrame) -> pd.DataFrame:
     df_orders_clean_cols = clean_column_names(df_orders)
     df_orders.columns = df_orders_clean_cols
 
-    df_orders = df_orders[config.data_cleaning_config.ORDERS_KEEP_COLS]
+    df_orders = df_orders[config.data_config.ORDERS_KEEP_COLS]
 
     save_dataset(
         file_name=config.data_config.ORDERS_UNCLEANED_FILENAME, dataset=df_orders
     )
-    return
+    return df_orders
 
 
 def trim_cols_products_df(df_products: pd.DataFrame) -> pd.DataFrame:
