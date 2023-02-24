@@ -175,6 +175,41 @@ ORDERS_KEEP_COLS:
   - shop_voucher_applied
   - return_refund_accepted
 
-ORDERS_UNCLEANED_FILENAME: unclean_orders_df.csv
+ORDERS_UNCLEANED_FILENAME: trimmed_unclean_orders_df.csv
 
-PRODUCTS_UNCLEANED_FILENAME: unclean_products_df.csv
+PRODUCTS_UNCLEANED_FILENAME: trimmed_unclean_products_df.csv
+
+ORDERS_DATA_TYPES:
+  datetime:
+    - order_placed
+    - order_paid
+    - order_shipped_out
+    - order_received
+    - order_completed
+    - order_cancelled
+    - return_refund_accepted
+  categorical:
+    - order_status
+    - payment_method
+  float:
+    - merchandise_subtotal
+    - shipping_fee
+    - shipping_discount_subtotal
+    - order_total
+    - redeemed_shopee_coins
+    - shopee_voucher_applied
+    - shopee_coins_earned
+    - shop_voucher_applied
+  string:
+    - order_id
+
+PRODUCTS_DATA_TYPES:
+  string:
+    - order_id
+    - product_thumbnail
+    - product_name
+  float:
+    - product_price
+
+CLEAN_PRODUCTS_DF_FILENAME: df_products.csv
+CLEAN_ORDERS_DF_FILENAME: df_orders.csv

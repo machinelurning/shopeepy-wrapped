@@ -157,8 +157,13 @@ dmypy.json
 cython_debug/
 
 # Sensitive test files
+*.csv
 df_o.csv
+df_orders.csv
+df_products.csv
 df_p.csv
 orders.pkl
 unclean_orders_df.csv
 unclean_products_df.csv
+raw_unclean_orders_df.csv
+raw_unclean_products_df.csv

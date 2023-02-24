@@ -24,6 +24,13 @@ class Element(TypedDict):
     attribute_value: NotRequired[List[str]]
 
 
+class DataTypes(TypedDict):
+    datetime: NotRequired[List[str]]
+    categorical: NotRequired[List[str]]
+    float: NotRequired[List[str]]
+    string: NotRequired[List[str]]
+
+
 class LogInConfig(BaseModel):
     """
     Application-level config.
@@ -70,6 +77,10 @@ class DataConfig(BaseModel):
     ORDERS_KEEP_COLS: List[str]
     ORDERS_UNCLEANED_FILENAME: str
     PRODUCTS_UNCLEANED_FILENAME: str
+    ORDERS_DATA_TYPES: DataTypes
+    PRODUCTS_DATA_TYPES: DataTypes
+    CLEAN_PRODUCTS_DF_FILENAME: str
+    CLEAN_ORDERS_DF_FILENAME: str
 
 
 class Config(BaseModel):
