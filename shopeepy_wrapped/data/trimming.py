@@ -13,7 +13,11 @@ def trim_cols_orders_df(df_orders: pd.DataFrame) -> pd.DataFrame:
     df_orders_clean_cols = clean_column_names(df_orders)
     df_orders.columns = df_orders_clean_cols
 
-    drop_cols = [col for col in df_orders.columns if col not in config.data_config.ORDERS_KEEP_COLS]
+    drop_cols = [
+        col
+        for col in df_orders.columns
+        if col not in config.data_config.ORDERS_KEEP_COLS
+    ]
 
     df_orders.drop(columns=drop_cols, inplace=True)
 

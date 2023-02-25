@@ -21,7 +21,9 @@ def convert_datetime(dataframe: pd.DataFrame, convert_cols: List[str]) -> pd.Dat
     return dataframe
 
 
-def convert_categorical(dataframe: pd.DataFrame, convert_cols: List[str]) -> pd.DataFrame:
+def convert_categorical(
+    dataframe: pd.DataFrame, convert_cols: List[str]
+) -> pd.DataFrame:
     dataframe = dataframe.copy()
 
     cols = [col for col in dataframe.columns if col in convert_cols]
@@ -57,7 +59,7 @@ def convert_object(dataframe: pd.DataFrame, convert_cols: List[str]) -> pd.DataF
 
 
 def convert_data_types(
-        dataframe: pd.DataFrame, data_type_dict: DataTypes
+    dataframe: pd.DataFrame, data_type_dict: DataTypes
 ) -> pd.DataFrame:
     for data_type in data_type_dict.keys():
         if data_type == "datetime":
