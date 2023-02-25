@@ -1,10 +1,11 @@
 from typing import Any, List, Dict, Tuple
 
+from shopeepy_wrapped.config.core import config
 from shopeepy_wrapped.data.cleaning import clean_dataset
+from shopeepy_wrapped.data.data_manager import save_dataset
 from shopeepy_wrapped.parsing.parse_orders import generate_orders_df
 from shopeepy_wrapped.parsing.parse_products import generate_products_df
-from shopeepy_wrapped.data.data_manager import save_dataset
-from shopeepy_wrapped.config.core import config
+
 
 class ShopeeInsights:
     def __init__(self, orders: Tuple[Dict]) -> None:
@@ -46,12 +47,16 @@ class ShopeeInsights:
             count_orders_by_day_distrib = \
                 self.completed_orders.groupby(
                     self.orders.order_placed.dt.day_name())[
-                    "order_id"].count().sort_values()
+                    "order_id"].count().reset_index()
 
-            day_with_most_orders_by_cnt = [count_orders_by_day_distrib.keys()[count_orders_by_day_distrib.argmax()]]
+            max_count_orders_by_day = count_orders_by_day_distrib["order_id"].max()
 
-            self.update_insights_dict(["count_orders_by_day_distrib", "day_with_most_orders_by_cnt"],
-                                      [count_orders_by_day_distrib, day_with_most_orders_by_cnt])
+            days_with_most_orders_by_cnt = count_orders_by_day_distrib["order_placed"].loc[
+                count_orders_by_day_distrib["order_id"] == max_count_orders_by_day].tolist()
+
+            self.update_insights_dict(
+                ["count_orders_by_day_distrib", "day_with_most_orders_by_cnt", "max_count_orders_by_day"],
+                [count_orders_by_day_distrib, days_with_most_orders_by_cnt, max_count_orders_by_day])
 
         except KeyError:
             pass
@@ -62,12 +67,16 @@ class ShopeeInsights:
             count_orders_by_hr_distrib = \
                 self.completed_orders.groupby(
                     self.orders.order_placed.dt.hour)[
-                    "order_id"].count().sort_values()
+                    "order_id"].count().reset_index()
 
-            hour_with_most_orders_by_cnt = [count_orders_by_hr_distrib.keys()[count_orders_by_hr_distrib.argmax()]]
+            max_count_orders_by_hr = count_orders_by_hr_distrib["order_id"].max()
 
-            self.update_insights_dict(["count_orders_by_hr_distrib", "hour_with_most_orders_by_cnt"],
-                                      [count_orders_by_hr_distrib, hour_with_most_orders_by_cnt])
+            hour_with_most_orders_by_cnt = count_orders_by_hr_distrib["order_placed"].loc[
+                count_orders_by_hr_distrib["order_id"] == max_count_orders_by_hr].tolist()
+
+            self.update_insights_dict(
+                ["count_orders_by_hr_distrib", "hour_with_most_orders_by_cnt", "max_count_orders_by_hr"],
+                [count_orders_by_hr_distrib, hour_with_most_orders_by_cnt, max_count_orders_by_hr])
         except KeyError:
             pass
 
@@ -78,12 +87,16 @@ class ShopeeInsights:
             sum_amt_orders_by_day_distrib = \
                 self.completed_orders.groupby(
                     self.completed_orders.order_placed.dt.day_name())[
-                    "order_total"].sum().sort_values()
+                    "order_total"].sum().reset_index()
 
-            most_expensive_day_by_amt_sum = [sum_amt_orders_by_day_distrib.keys()[sum_amt_orders_by_day_distrib.argmax()]]
+            max_amt_orders_by_day = sum_amt_orders_by_day_distrib["order_total"].max()
 
-            self.update_insights_dict(["sum_amt_orders_by_day_distrib", "most_expensive_day_by_amt_sum"],
-                                      [sum_amt_orders_by_day_distrib, most_expensive_day_by_amt_sum])
+            most_expensive_day_by_amt_sum = sum_amt_orders_by_day_distrib["order_placed"].loc[
+                sum_amt_orders_by_day_distrib["order_total"] == max_amt_orders_by_day].tolist()
+
+            self.update_insights_dict(
+                ["sum_amt_orders_by_day_distrib", "most_expensive_day_by_amt_sum", "max_amt_orders_by_day"],
+                [sum_amt_orders_by_day_distrib, most_expensive_day_by_amt_sum, max_amt_orders_by_day])
         except KeyError:
             pass
 
@@ -94,9 +107,12 @@ class ShopeeInsights:
             avg_amt_orders_by_day_distrib = \
                 self.completed_orders.groupby(
                     self.completed_orders.order_placed.dt.day_name())[
-                    "order_total"].median().sort_values()
+                    "order_total"].median().reset_index()
 
-            most_expensive_day_by_avg_amt = [avg_amt_orders_by_day_distrib.keys()[avg_amt_orders_by_day_distrib.argmax()]]
+            max_avg_amt_orders_by_day = avg_amt_orders_by_day_distrib["order_total"].max()
+
+            most_expensive_day_by_avg_amt = avg_amt_orders_by_day_distrib["order_placed"].loc[
+                avg_amt_orders_by_day_distrib["order_total"] == max_avg_amt_orders_by_day].tolist()
 
             self.update_insights_dict(["avg_amt_orders_by_day_distrib", "most_expensive_day_by_avg_amt"],
                                       [avg_amt_orders_by_day_distrib, most_expensive_day_by_avg_amt])
@@ -135,13 +151,15 @@ class ShopeeInsights:
 
     def most_expensive_product(self) -> None:
         try:
-            arg_most_exp_product = self.completed_orders[
-                "product_price"].argmax()
-            most_expensive_product = self.products["product_name"].iloc[arg_most_exp_product]
-            price_most_expensive_product = self.products["product_price"].iloc[arg_most_exp_product]
 
-            self.update_insights_dict(["most_expensive_product", "price_most_expensive_product"],
-                                      [[most_expensive_product], [price_most_expensive_product]], )
+            completed_products = self.products.loc[self.products["order_status"] == "ORDER COMPLETED"]
+
+            most_exp_product_price = completed_products["product_price"].max()
+
+            most_expensive_products = completed_products["product_name"].loc[completed_products["product_price"] == most_exp_product_price].tolist()
+
+            self.update_insights_dict(["most_expensive_products", "most_exp_product_price"],
+                                      [[most_expensive_products], [most_exp_product_price]], )
         except KeyError:
             pass
 
@@ -158,14 +176,16 @@ class ShopeeInsights:
         self.most_expensive_product()
 
         return None
+
     def shipping_fees_agg(self) -> None:
         try:
             shipping_fee_no_discount = self.completed_orders.shipping_fee.sum()
             shipping_fee_discounts = self.completed_orders.shipping_discount_subtotal.sum()
             shipping_fee_with_discount = shipping_fee_no_discount - shipping_fee_discounts
 
-            self.update_insights_dict(["shipping_fee_no_discount", "shipping_fee_discounts", "shipping_fee_with_discount"],
-                                      [shipping_fee_no_discount, shipping_fee_discounts, shipping_fee_with_discount])
+            self.update_insights_dict(
+                ["shipping_fee_no_discount", "shipping_fee_discounts", "shipping_fee_with_discount"],
+                [shipping_fee_no_discount, shipping_fee_discounts, shipping_fee_with_discount])
         except KeyError:
             pass
 
