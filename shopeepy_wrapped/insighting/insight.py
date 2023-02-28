@@ -58,7 +58,7 @@ class ShopeeInsights:
     def cnt_orders_by_day(self) -> None:
         try:
             count_orders_by_day_distrib = (
-                self.completed_orders.groupby(self.orders.order_placed.dt.day_name())[
+                self.completed_orders.groupby(self.completed_orders.order_placed.dt.day_name())[
                     "order_id"
                 ]
                 .count()
@@ -93,7 +93,7 @@ class ShopeeInsights:
     def cnt_orders_by_hour(self) -> None:
         try:
             count_orders_by_hr_distrib = (
-                self.completed_orders.groupby(self.orders.order_placed.dt.hour)[
+                self.completed_orders.groupby(self.completed_orders.order_placed.dt.hour)[
                     "order_id"
                 ]
                 .count()
@@ -194,6 +194,39 @@ class ShopeeInsights:
             pass
 
         return None
+
+    def avg_order_amt_per_hr(self) -> None:
+        try:
+            avg_amt_orders_by_hr_distrib = (
+                self.completed_orders.groupby(
+                    self.completed_orders.order_placed.dt.hour
+                )["order_total"]
+                .median()
+                .reset_index()
+            )
+
+            max_avg_amt_orders_by_hr = avg_amt_orders_by_hr_distrib[
+                "order_total"
+            ].max()
+
+            most_expensive_hr_by_avg_amt = (
+                avg_amt_orders_by_hr_distrib["order_placed"]
+                .loc[
+                    avg_amt_orders_by_hr_distrib["order_total"]
+                    == max_avg_amt_orders_by_hr
+                    ]
+                .tolist()
+            )
+
+            self.update_insights_dict(
+                ["avg_amt_orders_by_hr_distrib", "most_expensive_hr_by_avg_amt"],
+                [avg_amt_orders_by_hr_distrib, most_expensive_hr_by_avg_amt],
+            )
+        except KeyError:
+            pass
+
+        return None
+
 
     def get_avg_order_amt(self) -> None:
         try:
