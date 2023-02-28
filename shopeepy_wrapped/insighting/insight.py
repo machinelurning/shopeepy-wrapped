@@ -346,6 +346,7 @@ class ShopeeInsights:
 
         self.sum_amt_orders_by_day()
         self.avg_order_amt_per_day()
+        self.avg_order_amt_per_hr()
 
         ######################
         # Orders aggregation #
