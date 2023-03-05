@@ -1,5 +1,6 @@
 import time
 
+from rich.prompt import Prompt
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 
@@ -10,7 +11,7 @@ from shopeepy_wrapped.browser.wait import (
     webdriverwait_by_xpath,
 )
 from shopeepy_wrapped.config.core import InvalidCredentials, config
-from shopeepy_wrapped.shopee_login.credentials import get_credentials
+from shopeepy_wrapped.shopee_login.credentials import get_credentials, set_credentials
 from shopeepy_wrapped.string_manipulation.xpath_manipulation import xpath_generator
 
 
@@ -47,11 +48,8 @@ def verification_needed() -> bool:
 
 
 def verify_by_email_link() -> bool:
-    if not verification_needed():
-        return login_success_watcher()
-
     click_button(config.login_config.VERIFY_BY_EMAIL_LINK)
-    return login_success_watcher()
+    return True
 
 
 def login_with_credentials(username: str) -> bool:
@@ -77,3 +75,16 @@ def login_with_credentials(username: str) -> bool:
         raise InvalidCredentials("Username and/or password are incorrect.")
 
     return True
+
+
+def prompt_user_credentials() -> str:
+    username = Prompt.ask("Enter your Shopee username")
+    password = Prompt.ask("Enter your Shopee password", password=True)
+    verify_password = Prompt.ask("Verify password", password=True)
+
+    if verify_password == password:
+        set_credentials(username=username, password=password)
+    else:
+        raise InvalidCredentials("Passwords do not match. Please try again.")
+
+    return username
